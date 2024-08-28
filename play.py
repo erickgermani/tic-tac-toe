@@ -35,10 +35,13 @@ def is_valid_move(board, move):
 # Função para a jogada do humano
 def human_move(board):
     while True:
-        move = int(input("Escolha uma posição (0-8): "))
-        if is_valid_move(board, move):
-            return move
-        else:
+        try:
+            move = int(input("Escolha uma posição (0-8): "))
+            if is_valid_move(board, move):
+                return move
+            
+            print("Movimento inválido. Tente novamente.")
+        except:
             print("Movimento inválido. Tente novamente.")
 
 # Função de predição da jogada pela rede neural

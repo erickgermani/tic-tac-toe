@@ -86,7 +86,7 @@ model = Sequential([
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
 # Treinar o modelo
-model.fit(X_train, y_train, epochs=20, batch_size=32)
+model.fit(X_train, y_train, epochs=200, batch_size=32)
 
 # Salvar o modelo treinado
 model.save('tic_tac_toe_model.h5')
