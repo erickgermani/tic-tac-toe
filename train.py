@@ -27,11 +27,20 @@ def evaluate_move(board, move, player):
     winner = check_winner(board)
     board[move] = 0  # Desfazer o movimento
     if winner == player:
-        return 1  # Vitória
+        return 10  # Vitória
     elif winner == -player:
-        return -1  # Derrota
+        return -10  # Derrota
     else:
-        return 0  # Nem vitória nem derrota imediata
+        # Avaliação com base em possibilidades futuras
+        opponent = -player
+        opponent_moves = [m for m in range(9) if board[m] == 0]
+        score = 0
+        for opponent_move in opponent_moves:
+            board[opponent_move] = opponent
+            if check_winner(board) == opponent:
+                score -= 5  # Penalidade por deixar o oponente vencer
+            board[opponent_move] = 0  # Desfazer o movimento
+        return score
 
 # Função para determinar o melhor movimento baseado na avaliação
 def best_move(board, player):
@@ -77,7 +86,7 @@ model = Sequential([
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
 # Treinar o modelo
-model.fit(X_train, y_train, epochs=100, batch_size=32)
+model.fit(X_train, y_train, epochs=20, batch_size=32)
 
 # Salvar o modelo treinado
 model.save('tic_tac_toe_model.h5')

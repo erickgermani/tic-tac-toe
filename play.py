@@ -27,7 +27,10 @@ def check_winner(board):
 
 # Função para verificar se o movimento é válido
 def is_valid_move(board, move):
-    return board[move] == 0
+    try:
+        return board[move] == 0
+    except:
+        return 0
 
 # Função para a jogada do humano
 def human_move(board):
